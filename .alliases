@@ -3,30 +3,47 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
 alias l='ls -lah'
 
-# shortcuts
-alias mobile="cd ~/mobile"
-alias project="cd ~/project"
+
+# git
+alias g="git"
+alias ga="git add ."
+alias gc="git commit"
+alias gcom="git commit -m"
+alias gcs="git commit -S"
+alias gph="git push"
+alias gpl="git pull"
+alias gs="git status"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gdh="git diff HEAD"
+alias gds="git diff --staged"
+alias gco="git checkout"
+alias gb="git branch"
+alias gba="git branch -a"
+alias gbd="git branch -d"
+alias gbl="git blame"
+alias gcob="git checkout -b"
+alias gcoh="git checkout HEAD"
+
+
+# Shortcuts
 alias web="cd ~/web"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
-alias g="git"
+alias p="cd ~/project"
+alias mobile="cd ~/mobile"
 
-
-alias path='echo -e ${PATH//:/\\n}'
-
-alias sail='bash vendor/bin/sail'
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 
 alias code="open -a Visual\ Studio\ Code.app"
 alias serve='ruby -run -e httpd . -p 8000'
 alias servephp='php -S localhost:8000 -t .'
 alias servepython='python -m SimpleHTTPServer 8000'
-#alias phpstorm="open -a PhpStorm"
 alias phpstorm="open -a PhpStorm -n --args '$1'"
+alias webstorm="open -a WebStorm -n --args '$1'"
+
 # tools
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 
