@@ -1,0 +1,32 @@
+# navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+alias l='ls -lah'
+
+# shortcuts
+alias mobile="cd ~/mobile"
+alias project="cd ~/project"
+alias web="cd ~/web"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/projects"
+alias g="git"
+
+
+alias path='echo -e ${PATH//:/\\n}'
+
+alias sail='bash vendor/bin/sail'
+
+alias code="open -a Visual\ Studio\ Code.app"
+alias serve='ruby -run -e httpd . -p 8000'
+alias servephp='php -S localhost:8000 -t .'
+alias servepython='python -m SimpleHTTPServer 8000'
+#alias phpstorm="open -a PhpStorm"
+alias phpstorm="open -a PhpStorm -n --args '$1'"
+# tools
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
