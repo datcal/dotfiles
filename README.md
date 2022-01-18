@@ -3,14 +3,16 @@
 ## Steps
 
 ```sh
-chmod 777 install.sh
-chmod 777 update.sh
+chmod +x install.sh
+chmod +x update.sh
 ```
 
 ```sh
 ./install.sh
 ./update.sh
 ```
+
+## Further Information
 
 Creates Brewfile in the current directory from currently-installed packages
 

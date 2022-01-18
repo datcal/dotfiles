@@ -6,6 +6,8 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "microsoft/git"
 tap "ngrok/ngrok"
+
+
 brew "python3"
 brew "node"
 brew "watchman"
@@ -35,7 +37,6 @@ brew "zlib"
 brew "zsh"
 brew "zsh-completions"
 brew "heroku/brew/heroku"
-
 
 
 cask "adoptopenjdk8"
