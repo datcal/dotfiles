@@ -37,6 +37,7 @@ brew "zlib"
 brew "zsh"
 brew "zsh-completions"
 brew "heroku/brew/heroku"
+brew "openssl@3"
 
 
 cask "adoptopenjdk8"

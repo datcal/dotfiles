@@ -1,9 +1,11 @@
 [user]
 	name = Burak Hamza
 	email = thedatcal@gmail.com
+	#signingkey = F8006F77
 [core]
 	excludesfile = /Users/burakhamza/.gitignore_global
 	editor = subl -n -w
+	autocrlf = input
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -12,11 +14,11 @@
 	trustExitCode = true
 [commit]
 	template = /Users/burakhamza/.stCommitMsg
+	gpgsign = false
 [init]
 	defaultBranch = main
 [credential]
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager-core
+	helper = osxkeychain
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 [alias]
@@ -68,3 +70,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[gpg]
+	program = /opt/homebrew/bin/gpg

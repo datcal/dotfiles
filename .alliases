@@ -49,3 +49,8 @@ alias webstorm="open -a WebStorm -n --args '$1'"
 # tools
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 
+
+alias switch-php81="brew unlink php@7.4 && brew link --overwrite --force php"
+alias switch-php74="brew unlink php && brew link --overwrite --force php@7.4"
+
+alias newlaravel='f(){ curl -s "https://laravel.build/"$@"" | bash;  unset -f f; }; f'
