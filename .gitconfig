@@ -14,7 +14,7 @@
 	trustExitCode = true
 [commit]
 	template = /Users/burakhamza/.stCommitMsg
-	gpgsign = false
+	gpgSign = true
 [init]
 	defaultBranch = main
 [credential]

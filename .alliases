@@ -54,3 +54,8 @@ alias switch-php81="brew unlink php@7.4 && brew link --overwrite --force php"
 alias switch-php74="brew unlink php && brew link --overwrite --force php@7.4"
 
 alias newlaravel='f(){ curl -s "https://laravel.build/"$@"" | bash;  unset -f f; }; f'
+
+alias wtf="wtfutil"
+
+alias app="docker compose exec php"
+alias apc="docker compose exec php bin/console"
