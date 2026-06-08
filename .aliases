@@ -1,0 +1,47 @@
+# navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias l='ls -lah'
+
+# git
+alias g="git"
+alias ga="git add ."
+alias gc="git commit"
+alias gcom="git commit -m"
+alias gcs="git commit -S"
+alias gph="git push"
+alias gpl="git pull"
+alias gs="git status"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gdh="git diff HEAD"
+alias gds="git diff --staged"
+alias gco="git checkout"
+alias gb="git branch"
+alias gba="git branch -a"
+alias gbd="git branch -d"
+alias gbl="git blame"
+alias gcob="git checkout -b"
+alias gcoh="git checkout HEAD"
+
+# shortcuts
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/project"
+
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+
+alias serve='ruby -run -e httpd . -p 8000'
+alias servephp='php -S localhost:8000 -t .'
+alias servephp3000='php -S localhost:3000 -t .'
+alias servephp8888='php -S localhost:8888 -t .'
+
+alias app="docker compose exec php"
+alias apc="docker compose exec php bin/console"
+
+# Linux-specific
+alias open="xdg-open"
+alias setclip="xclip -selection c"
+alias getclip="xclip -selection c -o"

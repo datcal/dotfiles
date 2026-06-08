@@ -1,0 +1,3 @@
+quick-terminal-position = top
+quit-after-last-window-closed = false
+keybind = F12=toggle_quick_terminal

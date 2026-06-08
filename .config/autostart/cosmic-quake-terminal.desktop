@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Cosmic Quake Terminal
+Exec=/home/datcal/project/cosmic-quake-terminal/quake-term.py
+X-GNOME-Autostart-enabled=true
+NoDisplay=true
+StartupNotify=false
