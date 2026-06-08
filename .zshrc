@@ -72,3 +72,5 @@ alias grep='grep --color=auto'
 
 # --- Shared aliases (git/nav/etc.) — same file bash uses ---------------------
 [ -f "$HOME/.aliases" ] && . "$HOME/.aliases"
+
+. "$HOME/.atuin/bin/env"

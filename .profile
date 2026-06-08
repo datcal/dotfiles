@@ -15,3 +15,5 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+. "$HOME/.atuin/bin/env"

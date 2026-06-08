@@ -50,8 +50,14 @@ if have zsh && [ "$SHELL" != "$(command -v zsh)" ]; then
     zsh_path="$(command -v zsh)"
     if have sudo; then
         grep -qxF "$zsh_path" /etc/shells 2>/dev/null || echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
-    fi
-    if chsh -s "$zsh_path" 2>/dev/null; then
+        # Use sudo (already authenticated above) so chsh never blocks on a
+        # hidden password prompt.
+        if sudo chsh -s "$zsh_path" "$USER"; then
+            echo "Default shell set to zsh (log out/in to apply)."
+        else
+            echo "Could not change default shell automatically — run: chsh -s $zsh_path"
+        fi
+    elif chsh -s "$zsh_path"; then
         echo "Default shell set to zsh (log out/in to apply)."
     else
         echo "Could not change default shell automatically — run: chsh -s $zsh_path"
