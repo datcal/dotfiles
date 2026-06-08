@@ -30,6 +30,12 @@ backup_and_symlink ".config/autostart/cosmic-quake-terminal.desktop" \
                                                        "$HOME/.config/autostart/cosmic-quake-terminal.desktop"
 backup_and_symlink ".config/autostart/indicator-multiload.desktop" \
                                                        "$HOME/.config/autostart/indicator-multiload.desktop"
+backup_and_symlink ".config/systemd/user/dotfiles-snapshot.service" \
+                                                       "$HOME/.config/systemd/user/dotfiles-snapshot.service"
+backup_and_symlink ".config/systemd/user/dotfiles-snapshot.timer" \
+                                                       "$HOME/.config/systemd/user/dotfiles-snapshot.timer"
+
+systemctl --user daemon-reload
 
 echo ""
 echo "Done. Open a new terminal for changes to take effect."

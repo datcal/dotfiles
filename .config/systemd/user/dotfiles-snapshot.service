@@ -1,0 +1,6 @@
+[Unit]
+Description=Snapshot installed packages to dotfiles repo
+
+[Service]
+Type=oneshot
+ExecStart=%h/project/dotfiles/scripts/snapshot-packages.sh
