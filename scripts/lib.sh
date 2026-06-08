@@ -122,6 +122,34 @@ install_tpm() {
     git clone https://github.com/tmux-plugins/tpm "$d"
 }
 
+install_lazygit() {
+    # Terminal git UI; LazyVim binds Space-g-g to it when present. Not in apt,
+    # and the release asset name carries the version, so query it first.
+    have lazygit && return 0
+    have curl || { echo "  lazygit: curl missing, skipping"; return 0; }
+    local ver arch asset tmp
+    ver="$(curl -sSfL https://api.github.com/repos/jesseduffield/lazygit/releases/latest 2>/dev/null \
+        | grep -oE '"tag_name": *"v[^"]+"' | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')"
+    [ -n "$ver" ] || { echo "  lazygit: version lookup failed, skipping"; return 0; }
+    case "$(uname -m)" in
+        x86_64)        arch="x86_64" ;;
+        aarch64|arm64) arch="arm64" ;;
+        *) echo "  lazygit: unsupported arch, skipping"; return 0 ;;
+    esac
+    asset="lazygit_${ver}_Linux_${arch}.tar.gz"
+    tmp="$(mktemp -d)"
+    if curl -sSfL "https://github.com/jesseduffield/lazygit/releases/latest/download/${asset}" -o "$tmp/lg.tar.gz"; then
+        tar -xzf "$tmp/lg.tar.gz" -C "$tmp" lazygit 2>/dev/null
+        mkdir -p "$HOME/.local/bin"
+        cp "$tmp/lazygit" "$HOME/.local/bin/lazygit"
+        chmod +x "$HOME/.local/bin/lazygit"
+        echo "  lazygit: installed v$ver"
+    else
+        echo "  lazygit: download failed, skipping"
+    fi
+    rm -rf "$tmp"
+}
+
 install_neovim() {
     # LazyVim needs Neovim >= 0.9; Pop!_OS apt ships 0.7.2 (too old), so install
     # the latest stable release into ~/.local/nvim and link the binary.
@@ -199,6 +227,7 @@ install_terminal_tools() {
     install_atuin     || echo "  warn: atuin skipped"
     install_eza       || echo "  warn: eza skipped"
     install_delta     || echo "  warn: delta skipped"
+    install_lazygit   || echo "  warn: lazygit skipped"
     install_neovim    || echo "  warn: neovim skipped"
     install_zinit     || echo "  warn: zinit skipped"
     install_tpm       || echo "  warn: tpm skipped"
