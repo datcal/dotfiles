@@ -1,6 +1,7 @@
 [user]
 	name = Burak Hamza
 	email = thedatcal@gmail.com
+	signingkey = 61028F53C850E725
 [core]
 	excludesfile = ~/.gitignore
 	editor = code --wait
