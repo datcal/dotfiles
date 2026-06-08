@@ -8,26 +8,30 @@ fi
 
 DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+if command -v sudo >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
+    sudo -v
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-echo "Installing packages..."
-sudo apt-get update -q
+    echo "Installing packages..."
+    sudo apt-get update -q
 
-# Bootstrap essentials needed to run everything else
-sudo apt-get install -y git git-lfs gpg curl
+    # Bootstrap essentials needed to run everything else
+    sudo apt-get install -y git git-lfs gpg curl
 
-# Install the full saved package list if populated
-PACKAGES_FILE="$DOTFILES_ROOT/packages/apt-manual.txt"
-if [[ -s "$PACKAGES_FILE" ]] && grep -qv '^#' "$PACKAGES_FILE"; then
-    echo "Installing from packages/apt-manual.txt..."
-    grep -v '^#' "$PACKAGES_FILE" | xargs sudo apt-get install -y
+    # Install the full saved package list if populated
+    PACKAGES_FILE="$DOTFILES_ROOT/packages/apt-manual.txt"
+    if [[ -s "$PACKAGES_FILE" ]] && grep -qv '^#' "$PACKAGES_FILE"; then
+        echo "Installing from packages/apt-manual.txt..."
+        grep -v '^#' "$PACKAGES_FILE" | xargs sudo apt-get install -y
+    else
+        echo "packages/apt-manual.txt not populated yet — installing defaults only."
+        sudo apt-get install -y xclip htop build-essential
+    fi
+
+    git lfs install
 else
-    echo "packages/apt-manual.txt not populated yet — installing defaults only."
-    sudo apt-get install -y xclip htop build-essential
+    echo "Skipping package installation (sudo/apt-get not available)."
 fi
-
-git lfs install
 
 backup_and_symlink() {
     local src="$DOTFILES_ROOT/$1"
@@ -63,11 +67,14 @@ backup_and_symlink ".config/systemd/user/dotfiles-snapshot.timer" \
 
 chmod +x "$DOTFILES_ROOT/scripts/snapshot-packages.sh"
 
-echo "Enabling daily package snapshot timer..."
-systemctl --user daemon-reload
-systemctl --user enable --now dotfiles-snapshot.timer
-# Allow the timer to run even when not logged in
-loginctl enable-linger "$USER"
+if command -v systemctl >/dev/null 2>&1; then
+    echo "Enabling daily package snapshot timer..."
+    systemctl --user daemon-reload
+    systemctl --user enable --now dotfiles-snapshot.timer
+    loginctl enable-linger "$USER"
+else
+    echo "Skipping systemd timer setup (systemctl not available)."
+fi
 
 echo ""
 echo "Done. Open a new terminal for changes to take effect."
