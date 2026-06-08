@@ -5,7 +5,9 @@ DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PACKAGES_DIR="$DOTFILES_ROOT/packages"
 
 # Manually-installed apt packages (excludes auto-installed dependencies)
-/usr/bin/apt-mark showmanual | sort > "$PACKAGES_DIR/apt-manual.txt"
+if command -v apt-mark >/dev/null 2>&1; then
+    apt-mark showmanual | sort > "$PACKAGES_DIR/apt-manual.txt"
+fi
 
 # Snap packages (if snap is present)
 if command -v snap >/dev/null 2>&1; then
@@ -29,5 +31,6 @@ if git diff --quiet -- packages/ && git diff --staged --quiet -- packages/; then
 fi
 
 git add packages/
-git commit -m "chore: update packages snapshot ($(date +%Y-%m-%d))"
+# Runs unattended (systemd timer) where no pinentry is available, so don't GPG-sign.
+git commit --no-gpg-sign -m "chore: update packages snapshot ($(date +%Y-%m-%d))"
 git push
