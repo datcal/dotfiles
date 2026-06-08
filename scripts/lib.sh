@@ -122,6 +122,38 @@ install_tpm() {
     git clone https://github.com/tmux-plugins/tpm "$d"
 }
 
+install_neovim() {
+    # LazyVim needs Neovim >= 0.9; Pop!_OS apt ships 0.7.2 (too old), so install
+    # the latest stable release into ~/.local/nvim and link the binary.
+    if have nvim; then
+        local v
+        v="$(nvim --version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
+        case "$v" in
+            0.7|0.8) ;;        # too old → reinstall
+            "") ;;             # couldn't parse → reinstall
+            *) return 0 ;;     # 0.9+ already present
+        esac
+    fi
+    have curl || { echo "  neovim: curl missing, skipping"; return 0; }
+    local tmp asset url d
+    tmp="$(mktemp -d)"
+    for asset in nvim-linux-x86_64.tar.gz nvim-linux64.tar.gz; do
+        url="https://github.com/neovim/neovim/releases/latest/download/$asset"
+        if curl -sSfL "$url" -o "$tmp/nvim.tar.gz" 2>/dev/null; then
+            tar -xzf "$tmp/nvim.tar.gz" -C "$tmp" 2>/dev/null || continue
+            d="$(find "$tmp" -maxdepth 1 -type d -name 'nvim-linux*' | head -1)"
+            [ -n "$d" ] || continue
+            rm -rf "$HOME/.local/nvim"
+            mv "$d" "$HOME/.local/nvim"
+            mkdir -p "$HOME/.local/bin"
+            ln -sfn "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
+            echo "  neovim: installed $("$HOME/.local/bin/nvim" --version | head -1)"
+            break
+        fi
+    done
+    rm -rf "$tmp"
+}
+
 setup_bat_theme() {
     # bat has no built-in Tokyo Night theme; fetch the tmTheme and build cache.
     local bat_bin theme_dir
@@ -167,6 +199,7 @@ install_terminal_tools() {
     install_atuin     || echo "  warn: atuin skipped"
     install_eza       || echo "  warn: eza skipped"
     install_delta     || echo "  warn: delta skipped"
+    install_neovim    || echo "  warn: neovim skipped"
     install_zinit     || echo "  warn: zinit skipped"
     install_tpm       || echo "  warn: tpm skipped"
     install_nerd_font || echo "  warn: nerd-font skipped"

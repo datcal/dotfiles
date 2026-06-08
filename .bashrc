@@ -74,6 +74,9 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+# starship prompt (shows git branch/status when inside a repo)
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+
 . "$HOME/.atuin/bin/env"
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh

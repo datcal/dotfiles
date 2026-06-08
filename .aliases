@@ -41,6 +41,10 @@ alias servephp8888='php -S localhost:8888 -t .'
 alias app="docker compose exec php"
 alias apc="docker compose exec php bin/console"
 
+# editor
+alias vim="nvim"
+alias vi="nvim"
+
 # Linux-specific
 alias open="xdg-open"
 alias setclip="xclip -selection c"
