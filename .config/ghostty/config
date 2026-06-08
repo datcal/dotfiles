@@ -1,3 +1,16 @@
 quick-terminal-position = top
 quit-after-last-window-closed = false
 keybind = F12=toggle_quick_terminal
+
+# Appearance
+theme = TokyoNight
+font-family = JetBrainsMono Nerd Font
+font-size = 12
+cursor-style = block
+window-padding-x = 8
+window-padding-y = 8
+
+# Behavior
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+confirm-close-surface = false

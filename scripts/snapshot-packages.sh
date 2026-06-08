@@ -33,4 +33,4 @@ fi
 git add packages/
 # Runs unattended (systemd timer) where no pinentry is available, so don't GPG-sign.
 git commit --no-gpg-sign -m "chore: update packages snapshot ($(date +%Y-%m-%d))"
-git push
+git push || echo "snapshot: push deferred (no credentials?) — commit saved locally"

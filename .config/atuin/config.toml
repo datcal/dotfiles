@@ -1,0 +1,14 @@
+# atuin — shell history (https://docs.atuin.sh/configuration/config/)
+
+# Search UI style
+search_mode = "fuzzy"
+filter_mode = "global"
+style = "compact"
+inline_height = 20
+
+# Keep Up arrow as normal shell history; Ctrl-R opens atuin search.
+filter_mode_shell_up_key_binding = "session"
+enter_accept = true
+
+# Local-only by default (no sync server configured).
+update_check = false

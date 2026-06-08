@@ -7,8 +7,9 @@ if [[ "$OSTYPE" != "linux-gnu"* ]]; then
 fi
 
 DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$DOTFILES_ROOT/scripts/lib.sh"
 
-if command -v sudo >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
+if have sudo && have apt-get; then
     sudo -v
     while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
@@ -17,6 +18,9 @@ if command -v sudo >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
 
     # Bootstrap essentials needed to run everything else
     sudo apt-get install -y git git-lfs gpg curl
+
+    # Core terminal stack from apt (tools not in apt are handled below)
+    sudo apt-get install -y zsh tmux fzf ripgrep bat fd-find unzip
 
     # Install the full saved package list if populated
     PACKAGES_FILE="$DOTFILES_ROOT/packages/apt-manual.txt"
@@ -33,41 +37,28 @@ else
     echo "Skipping package installation (sudo/apt-get not available)."
 fi
 
-backup_and_symlink() {
-    local src="$DOTFILES_ROOT/$1"
-    local target="$2"
+# Install tools that aren't in apt (starship, zoxide, atuin, eza, delta) plus
+# zinit / TPM / Nerd Font. Each is idempotent and degrades gracefully offline.
+install_terminal_tools
 
-    mkdir -p "$(dirname "$target")"
+link_all
 
-    if [[ -e "$target" && ! -L "$target" ]]; then
-        echo "  Backing up $target → ${target}_bak"
-        cp -r "$target" "${target}_bak"
+chmod +x "$DOTFILES_ROOT/scripts/snapshot-packages.sh" "$DOTFILES_ROOT/scripts/doctor.sh"
+
+# Make zsh the default login shell (only when it exists and isn't already default).
+if have zsh && [ "$SHELL" != "$(command -v zsh)" ]; then
+    zsh_path="$(command -v zsh)"
+    if have sudo; then
+        grep -qxF "$zsh_path" /etc/shells 2>/dev/null || echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
     fi
+    if chsh -s "$zsh_path" 2>/dev/null; then
+        echo "Default shell set to zsh (log out/in to apply)."
+    else
+        echo "Could not change default shell automatically — run: chsh -s $zsh_path"
+    fi
+fi
 
-    ln -sf "$src" "$target"
-    echo "  Linked $target → $src"
-}
-
-echo "Symlinking dotfiles..."
-backup_and_symlink ".aliases"                          "$HOME/.aliases"
-backup_and_symlink ".bashrc"                           "$HOME/.bashrc"
-backup_and_symlink ".profile"                          "$HOME/.profile"
-backup_and_symlink ".pam_environment"                  "$HOME/.pam_environment"
-backup_and_symlink ".gitconfig"                        "$HOME/.gitconfig"
-backup_and_symlink ".gitignore"                        "$HOME/.gitignore"
-backup_and_symlink ".config/ghostty/config"            "$HOME/.config/ghostty/config"
-backup_and_symlink ".config/autostart/cosmic-quake-terminal.desktop" \
-                                                       "$HOME/.config/autostart/cosmic-quake-terminal.desktop"
-backup_and_symlink ".config/autostart/indicator-multiload.desktop" \
-                                                       "$HOME/.config/autostart/indicator-multiload.desktop"
-backup_and_symlink ".config/systemd/user/dotfiles-snapshot.service" \
-                                                       "$HOME/.config/systemd/user/dotfiles-snapshot.service"
-backup_and_symlink ".config/systemd/user/dotfiles-snapshot.timer" \
-                                                       "$HOME/.config/systemd/user/dotfiles-snapshot.timer"
-
-chmod +x "$DOTFILES_ROOT/scripts/snapshot-packages.sh"
-
-if command -v systemctl >/dev/null 2>&1; then
+if have systemctl; then
     echo "Enabling daily package snapshot timer..."
     systemctl --user daemon-reload
     systemctl --user enable --now dotfiles-snapshot.timer
@@ -78,4 +69,5 @@ fi
 
 echo ""
 echo "Done. Open a new terminal for changes to take effect."
-echo "Run 'scripts/snapshot-packages.sh' now to take the first snapshot."
+echo "Run 'scripts/doctor.sh' to verify everything is linked."
+echo "First launch: tmux installs plugins via 'prefix + I'; nvim bootstraps LazyVim automatically."

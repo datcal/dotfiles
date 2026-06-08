@@ -1,0 +1,78 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+palette = "tokyo_night"
+
+format = """
+[](bg:base fg:blue)\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$nodejs$python$rust$golang$php$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+[fill]
+symbol = " "
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[directory]
+style = "blue"
+read_only = " "
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+symbol = " "
+style = "mauve"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "peach"
+format = '([$all_status$ahead_behind]($style) )'
+
+[cmd_duration]
+min_time = 500
+style = "yellow"
+format = "[ $duration]($style) "
+
+[nodejs]
+symbol = " "
+style = "green"
+
+[python]
+symbol = " "
+style = "yellow"
+
+[rust]
+symbol = " "
+style = "red"
+
+[golang]
+symbol = " "
+style = "blue"
+
+[php]
+symbol = " "
+style = "mauve"
+
+[docker_context]
+symbol = " "
+style = "blue"
+only_with_files = true
+
+[palettes.tokyo_night]
+base = "#1a1b26"
+blue = "#7aa2f7"
+mauve = "#bb9af7"
+green = "#9ece6a"
+peach = "#ff9e64"
+red = "#f7768e"
+yellow = "#e0af68"
+cyan = "#7dcfff"

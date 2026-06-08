@@ -1,0 +1,4 @@
+# bat configuration (https://github.com/sharkdp/bat)
+--theme="tokyonight_night"
+--style="numbers,changes,header"
+--paging=auto
