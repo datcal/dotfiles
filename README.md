@@ -66,6 +66,17 @@ type (**Insert**), and `Esc` to go back. The leader key is `Space`.
 Open a file: `Space e` for the file tree (Enter opens, `Space e` closes it), or
 `Space Space` to fuzzy-find by name. Search inside files with `Space /`.
 
+In the file tree (neo-tree):
+
+| Keys | Action |
+|------|--------|
+| `Enter` | open file / expand folder |
+| `H` | toggle hidden + dotfiles (shown by default here) |
+| `Y` | copy the full path to the clipboard |
+| `a` / `r` / `d` | add file / rename / delete |
+| `y` / `x` / `p` | copy / cut / paste the file within the tree |
+| `P` | preview the file |
+
 Move around:
 
 | Keys | Moves |
@@ -98,6 +109,17 @@ Switch between open files with `Shift-h` / `Shift-l`.
 
 If you ever see a `No parser for language "..."` error, run `:TSInstall <lang>`
 (e.g. `:TSInstall bash`) once to install that language's syntax highlighting.
+
+Git (the leader is `Space`):
+
+| Keys | Action |
+|------|--------|
+| `Space g g` | open **lazygit** (stage, commit, push, branches) |
+| `Space g l` | git log (commits) |
+| `Space g s` | git status |
+| `Space g b` | blame the current line |
+| `]h` / `[h` | jump to next / previous changed hunk |
+| `Space g h s` / `Space g h r` | stage / reset the hunk under the cursor |
 
 ## tmux cheat sheet
 
