@@ -6,6 +6,7 @@ avahi-daemon
 base-files
 base-passwd
 bash
+bat
 bsdutils
 ca-certificates
 cifs-utils
@@ -46,6 +47,7 @@ fcitx5-frontend-gtk4
 fcitx5-frontend-qt5
 fcitx5-frontend-qt6
 fcitx5-module-cloudpinyin
+fd-find
 findutils
 fonts-arphic-ukai
 fonts-arphic-uming
@@ -53,14 +55,19 @@ fonts-noto-cjk
 fonts-noto-cjk-extra
 fonts-noto-core
 fonts-noto-ui-core
+fzf
 gcc-14
 gcc-14-base
 ghostty
 gir1.2-girepository-2.0
 gir1.2-glib-2.0
 gir1.2-gtklayershell-0.1
+git
+git-delta
+git-lfs
 gnome-shell-extension-manager
 gnupg
+gpg
 gpgv
 grep
 gzip
@@ -276,6 +283,7 @@ linux-image-7.0.9-76070009-generic
 linux-modules-7.0.9-76070009-generic
 linux-system76
 locales
+locate
 login
 logrotate
 logsave
@@ -330,6 +338,7 @@ python3-typing-extensions
 python3-yaml
 python-apt-common
 readline-common
+ripgrep
 rsync
 rsyslog
 samba-common-bin
@@ -374,12 +383,14 @@ thunderbird-locale-zh-hans
 thunderbird-locale-zh-hant
 thunderbird-locale-zh-tw
 tilda
+tmux
 tzdata
 ubuntu-keyring
 ubuntu-pro-client
 ubuntu-pro-client-l10n
 ucf
 udev
+unzip
 util-linux
 vim-common
 vim-tiny
@@ -400,3 +411,4 @@ xdotool
 xkb-data
 xxd
 zlib1g
+zsh

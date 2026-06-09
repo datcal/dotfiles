@@ -6,6 +6,7 @@ com.microsoft.Edge
 com.visualstudio.code
 de.bund.ausweisapp.ausweisapp2
 io.dbeaver.DBeaverCommunity
+io.github.cosmic_utils.cosmic-ext-applet-clipboard-manager
 io.github.cosmic_utils.cosmic-ext-applet-external-monitor-brightness
 io.github.hepp3n.kdeconnect
 io.github.k33wee.clippy-land
