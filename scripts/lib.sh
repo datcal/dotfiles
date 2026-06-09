@@ -26,6 +26,7 @@ DOTFILES_LINKS=(
     ".config/atuin/config.toml::$HOME/.config/atuin/config.toml"
     ".config/bat/config::$HOME/.config/bat/config"
     ".config/nvim::$HOME/.config/nvim"
+    ".config/t::$HOME/.config/t"
     ".config/autostart/cosmic-quake-terminal.desktop::$HOME/.config/autostart/cosmic-quake-terminal.desktop"
     ".config/autostart/indicator-multiload.desktop::$HOME/.config/autostart/indicator-multiload.desktop"
     ".config/systemd/user/dotfiles-snapshot.service::$HOME/.config/systemd/user/dotfiles-snapshot.service"

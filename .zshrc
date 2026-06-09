@@ -74,3 +74,40 @@ alias grep='grep --color=auto'
 [ -f "$HOME/.aliases" ] && . "$HOME/.aliases"
 
 . "$HOME/.atuin/bin/env"
+
+T_CONFIG_DIR="$HOME/.config/t"
+
+t() {
+  local session="$(basename "$PWD" | tr '.:' '__')"
+  local conf="$T_CONFIG_DIR/sessions/$session.sh"
+
+  if ! tmux has-session -t "$session" 2>/dev/null; then
+    if [[ ! -f "$conf" ]]; then
+      mkdir -p "$T_CONFIG_DIR/sessions"
+      cp "$T_CONFIG_DIR/template.sh" "$conf"
+      chmod +x "$conf"
+    fi
+    "$conf" "$session" "$PWD"
+  fi
+
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session"
+  else
+    tmux attach -t "$session"
+  fi
+}
+
+te() {
+  local session="$(basename "$PWD" | tr '.:' '__')"
+  mkdir -p "$T_CONFIG_DIR/sessions"
+  [[ -f "$T_CONFIG_DIR/sessions/$session.sh" ]] || cp "$T_CONFIG_DIR/template.sh" "$T_CONFIG_DIR/sessions/$session.sh"
+  ${EDITOR:-nvim} "$T_CONFIG_DIR/sessions/$session.sh"
+}
+
+# --- GPG (commit signing) ----------------------------------------------------
+# Tell gpg-agent which terminal to draw the pinentry passphrase prompt on.
+export GPG_TTY=$(tty)
+
+export PATH=$PATH:/usr/local/go/bin
+
+

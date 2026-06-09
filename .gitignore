@@ -4,3 +4,4 @@
 *.swo
 .claude
 .config/nvim/lazy-lock.json
+.config/t/sessions
