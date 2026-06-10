@@ -113,6 +113,7 @@ iputils-ping
 iso-codes
 just
 kbd
+kde-plasma-desktop
 kernelstub
 keyboard-configuration
 kmod
@@ -315,6 +316,7 @@ nvidia-driver-580-open
 openssl
 passwd
 perl-base
+pinentry-curses
 podman
 pop-desktop
 poppler-data
@@ -410,5 +412,6 @@ xdg-user-dirs
 xdotool
 xkb-data
 xxd
+yakuake
 zlib1g
 zsh

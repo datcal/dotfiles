@@ -1,5 +1,6 @@
 com.bambulab.BambuStudio
 com.bitwarden.desktop.Locale
+com.github.phase1geo.minder
 com.google.Chrome
 com.jetbrains.GoLand
 com.microsoft.Edge
@@ -23,7 +24,9 @@ org.freedesktop.Platform.GL.nvidia-580-159-03
 org.freedesktop.Platform.VAAPI.nvidia
 org.freedesktop.Sdk
 org.gnome.Platform
+org.gnome.Platform
 org.gtk.Gtk3theme.adw-gtk3-dark
+org.jellyfin.JellyfinDesktop
 org.kde.Platform
 org.mozilla.firefox
 org.strawberrymusicplayer.strawberry
