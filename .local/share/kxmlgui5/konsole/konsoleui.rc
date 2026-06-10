@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE gui>
+<!-- Shortcut-only override (ActionProperties): paste on Ctrl+V AND Ctrl+Shift+V.
+     version must match Konsole's built-in konsoleui.rc (currently 14) or it's ignored.
+     Menus/toolbars are left to Konsole's defaults (not redefined here). -->
+<gui name="konsole" version="14">
+ <ActionProperties scheme="Default">
+  <Action name="edit_paste" shortcut="Ctrl+Shift+V; Ctrl+V"/>
+ </ActionProperties>
+</gui>

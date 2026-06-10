@@ -31,6 +31,13 @@ DOTFILES_LINKS=(
     ".config/autostart/indicator-multiload.desktop::$HOME/.config/autostart/indicator-multiload.desktop"
     ".config/systemd/user/dotfiles-snapshot.service::$HOME/.config/systemd/user/dotfiles-snapshot.service"
     ".config/systemd/user/dotfiles-snapshot.timer::$HOME/.config/systemd/user/dotfiles-snapshot.timer"
+    # Terminal + KDE static configs. KDE *rc* files that Plasma rewrites live are
+    # applied declaratively by scripts/setup-kde.sh instead — only hand-authored,
+    # static files are symlinked here (safe from Plasma's atomic rewrites).
+    ".config/terminator/config::$HOME/.config/terminator/config"
+    ".local/share/konsole/Main.profile::$HOME/.local/share/konsole/Main.profile"
+    ".local/share/kxmlgui5/konsole/konsoleui.rc::$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
+    ".local/share/kxmlgui5/konsole/konsolepart.rc::$HOME/.local/share/kxmlgui5/konsole/konsolepart.rc"
 )
 
 # Back up a pre-existing real file/dir, then symlink src -> target.

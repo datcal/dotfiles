@@ -1,0 +1,16 @@
+[global_config]
+[keybindings]
+  copy = <Primary><Shift>c
+  paste = <Primary>v
+[profiles]
+  [[default]]
+    copy_on_selection = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]

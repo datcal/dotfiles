@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE kpartgui>
+<!-- Yakuake (and any app embedding Konsole) loads the Konsole *part*, whose gui
+     name is "konsolepart" — it reads THIS file, not konsoleui.rc. Same override:
+     paste on Ctrl+V AND Ctrl+Shift+V. version must match the built-in (14). -->
+<gui name="konsolepart" version="14">
+ <ActionProperties scheme="Default">
+  <Action name="edit_paste" shortcut="Ctrl+Shift+V; Ctrl+V"/>
+ </ActionProperties>
+</gui>

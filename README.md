@@ -1,7 +1,8 @@
 # dotfiles
 
-My Linux setup (Pop!_OS / COSMIC, Ghostty terminal). Clone it on a new machine,
-run `./install.sh`, and the terminal looks and works the same everywhere.
+My Linux setup (Pop!_OS, Ghostty terminal; works under KDE Plasma or COSMIC).
+Clone it on a new machine, run `./install.sh`, and the terminal looks and works
+the same everywhere.
 
 ## Install
 
@@ -35,11 +36,13 @@ If you already had real config files (e.g. `~/.bashrc`), they're backed up to
 | `.tmux.conf` | tmux — terminal splits and saved sessions |
 | `.config/nvim/` | Neovim (LazyVim) |
 | `.config/starship.toml` | the prompt |
-| `.config/ghostty/config` | the terminal |
+| `.config/ghostty/config` | Ghostty (main terminal): theme, quick-terminal, copy/paste |
+| `.config/terminator/config` | Terminator: copy-on-select, `Ctrl+V` paste |
+| `.local/share/konsole/`, `.local/share/kxmlgui5/konsole/` | Konsole/Yakuake profile + `Ctrl+V` / `Ctrl+Shift+V` paste |
 | `.gitconfig` / `.gitignore` | git |
 | `.config/atuin`, `.config/bat` | history search, prettier `cat` |
 | `packages/` | list of installed apt/flatpak packages |
-| `scripts/` | the install helpers and the daily snapshot |
+| `scripts/` | install helpers, daily snapshot, and `setup-kde.sh` (KDE settings) |
 
 Everything is themed **Tokyo Night**.
 
@@ -141,6 +144,23 @@ Sessions auto-save, so they come back after a reboot.
 Installed apt and flatpak packages are snapshotted to `packages/` every day by a
 systemd timer, so the list stays current and a fresh install can recreate it.
 Take a snapshot by hand any time with `./scripts/snapshot-packages.sh`.
+
+## KDE Plasma settings
+
+Some desktop settings can't be symlinked — Plasma rewrites and atomically replaces
+its own `~/.config/*rc` files, which would clobber a repo symlink. So
+`scripts/setup-kde.sh` applies them declaratively (and idempotently) instead:
+
+- **Super (Meta) tap → KRunner** (Spotlight), not the application launcher.
+- **Default Konsole profile** → the copy-on-select `Main.profile`.
+
+`install.sh` runs it automatically; it's a no-op on non-KDE sessions (e.g. COSMIC).
+Re-run any time with `./scripts/setup-kde.sh`, and add new Plasma tweaks there as
+more `kwriteconfig` lines.
+
+**Terminal copy/paste** (all terminals): **select to copy** (automatic),
+**`Ctrl+Shift+C`** to copy explicitly, **`Ctrl+V`** and **`Ctrl+Shift+V`** to
+paste. `Ctrl+C` stays as interrupt. (Terminator allows only one paste key → `Ctrl+V`.)
 
 ## First launch notes
 

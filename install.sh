@@ -26,7 +26,7 @@ if have sudo && have apt-get; then
   # Core terminal stack from apt (tools not in apt are handled below)
   sudo apt-get install -y zsh tmux fzf ripgrep bat fd-find unzip
 
-  install the full saved package list if populated
+  # install the full saved package list if populated
   PACKAGES_FILE="$DOTFILES_ROOT/packages/apt-manual.txt"
   if [[ -s "$PACKAGES_FILE" ]] && grep -qv '^#' "$PACKAGES_FILE"; then
     echo "Installing from packages/apt-manual.txt..."
@@ -47,7 +47,10 @@ install_terminal_tools
 
 link_all
 
-chmod +x "$DOTFILES_ROOT/scripts/snapshot-packages.sh" "$DOTFILES_ROOT/scripts/doctor.sh"
+chmod +x "$DOTFILES_ROOT/scripts/snapshot-packages.sh" "$DOTFILES_ROOT/scripts/doctor.sh" "$DOTFILES_ROOT/scripts/setup-kde.sh"
+
+# Apply KDE Plasma settings (Meta->KRunner, default Konsole profile). No-op off KDE.
+"$DOTFILES_ROOT/scripts/setup-kde.sh" || echo "  warn: setup-kde skipped"
 
 # Make zsh the default login shell (only when it exists and isn't already default).
 if have zsh && [ "$SHELL" != "$(command -v zsh)" ]; then
