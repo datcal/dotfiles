@@ -9,36 +9,25 @@ fi
 DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$DOTFILES_ROOT/scripts/lib.sh"
 
-if have sudo && have apt-get; then
+if have sudo; then
   sudo -v
+  # Keep sudo warm for the rest of the run.
   while true; do
     sudo -n true
     sleep 60
     kill -0 "$$" || exit
   done 2>/dev/null &
 
-  echo "Installing packages..."
-  sudo apt-get update -q
-
-  # Bootstrap essentials needed to run everything else
-  sudo apt-get install -y git git-lfs gpg curl
-
-  # Core terminal stack from apt (tools not in apt are handled below)
-  sudo apt-get install -y zsh tmux fzf ripgrep bat fd-find unzip
-
-  # install the full saved package list if populated
-  PACKAGES_FILE="$DOTFILES_ROOT/packages/apt-manual.txt"
-  if [[ -s "$PACKAGES_FILE" ]] && grep -qv '^#' "$PACKAGES_FILE"; then
-    echo "Installing from packages/apt-manual.txt..."
-    grep -v '^#' "$PACKAGES_FILE" | xargs sudo apt-get install -y
+  # Pick the package installer for this distro (both defined in lib.sh).
+  if have pacman; then
+    install_packages_arch       # CachyOS / Arch
+  elif have apt-get; then
+    install_packages_debian     # Pop!_OS / Ubuntu / Debian
   else
-    echo "packages/apt-manual.txt not populated yet — installing defaults only."
-    sudo apt-get install -y xclip htop build-essential
+    echo "No supported package manager (pacman/apt-get) found — skipping packages."
   fi
-
-  git lfs install
 else
-  echo "Skipping package installation (sudo/apt-get not available)."
+  echo "Skipping package installation (sudo not available)."
 fi
 
 # Install tools that aren't in apt (starship, zoxide, atuin, eza, delta) plus

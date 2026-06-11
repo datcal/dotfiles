@@ -1,0 +1,5 @@
+# Explicitly-installed pacman packages (official repos), snapshotted on
+# CachyOS/Arch by scripts/snapshot-packages.sh — the Arch counterpart to
+# apt-manual.txt. Empty until the first snapshot on the new machine; until then
+# install.sh installs the core defaults inline (see install_packages_arch in
+# scripts/lib.sh). AUR packages are tracked separately in pacman-aur.txt.

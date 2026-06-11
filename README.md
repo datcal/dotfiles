@@ -1,8 +1,9 @@
 # dotfiles
 
-My Linux setup (Pop!_OS, Ghostty terminal; works under KDE Plasma or COSMIC).
-Clone it on a new machine, run `./install.sh`, and the terminal looks and works
-the same everywhere.
+My Linux setup (Ghostty terminal, themed Tokyo Night). `install.sh` is
+distro-aware — it works on **Arch/CachyOS** (pacman) and **Debian/Pop!_OS**
+(apt), under KDE Plasma or COSMIC. Clone it on a new machine, run `./install.sh`,
+and the terminal looks and works the same everywhere.
 
 ## Install
 
@@ -176,9 +177,11 @@ Sessions auto-save, so they come back after a reboot.
 
 ## Packages
 
-Installed apt and flatpak packages are snapshotted to `packages/` every day by a
-systemd timer, so the list stays current and a fresh install can recreate it.
-Take a snapshot by hand any time with `./scripts/snapshot-packages.sh`.
+Installed packages are snapshotted to `packages/` every day by a systemd timer,
+so the list stays current and a fresh install can recreate it: `apt-manual.txt`
+(Debian/Pop), `pacman-explicit.txt` + `pacman-aur.txt` (Arch/CachyOS),
+`flatpaks.txt`, `snaps.txt`. Snapshot by hand any time with
+`./scripts/snapshot-packages.sh`.
 
 ## KDE Plasma settings
 
@@ -196,6 +199,25 @@ more `kwriteconfig` lines.
 **Terminal copy/paste** (all terminals): **select to copy** (automatic),
 **`Ctrl+Shift+C`** to copy explicitly, **`Ctrl+V`** and **`Ctrl+Shift+V`** to
 paste. `Ctrl+C` stays as interrupt. (Terminator allows only one paste key → `Ctrl+V`.)
+
+## Spotlight launcher (TODO — decide once on CachyOS)
+
+Goal: a good-looking, themeable, Mac-style Spotlight opened with the **Super** key.
+Options, most → least customizable:
+
+- **Ulauncher** *(current lean)* — most themeable (swap/edit themes: colours, fonts,
+  layout) + a big extension marketplace (emoji, translate, clipboard, calculator,
+  web search…). Install: `paru -S ulauncher`.
+- **Albert** — the truest Spotlight clone, Qt (cleanest on KDE/Wayland), very fast,
+  Python plugins. `paru -S albert`. Theming via QML (a touch more technical).
+- **KRunner** (built-in) — feature-rich via plugins, looks good with a Global Theme +
+  centred position, zero install; but you can't redesign its layout.
+
+Binding it to **Super**: on Wayland a third-party launcher can't grab Super itself, so
+use the same KWin modifier-only D-Bus trick `setup-kde.sh` already uses. For Ulauncher:
+find its toggle method (`busctl --user introspect io.ulauncher.Ulauncher /io/ulauncher/Ulauncher`)
+and point `kwinrc → [ModifierOnlyShortcuts] Meta` at that D-Bus call. (`setup-kde.sh`
+currently maps Super → KWin **Overview**; swap that one line for the chosen launcher.)
 
 ## First launch notes
 

@@ -9,6 +9,12 @@ if command -v apt-mark >/dev/null 2>&1; then
     apt-mark showmanual | sort > "$PACKAGES_DIR/apt-manual.txt"
 fi
 
+# Explicitly-installed pacman packages (Arch/CachyOS): official repos + AUR split
+if command -v pacman >/dev/null 2>&1; then
+    pacman -Qqe | sort > "$PACKAGES_DIR/pacman-explicit.txt"
+    pacman -Qqm 2>/dev/null | sort > "$PACKAGES_DIR/pacman-aur.txt"
+fi
+
 # Snap packages (if snap is present)
 if command -v snap >/dev/null 2>&1; then
     snap list --unicode=never 2>/dev/null \

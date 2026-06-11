@@ -76,6 +76,51 @@ link_all() {
 have() { command -v "$1" >/dev/null 2>&1; }
 
 # ---------------------------------------------------------------------------
+# Package installation, per distro. install.sh picks the right one. Each assumes
+# sudo is available and already authenticated.
+# ---------------------------------------------------------------------------
+install_packages_debian() {
+    echo "Installing packages (apt)..."
+    sudo apt-get update -q
+    sudo apt-get install -y git git-lfs gpg curl
+    sudo apt-get install -y zsh tmux fzf ripgrep bat fd-find unzip
+    local pkgs="$DOTFILES_ROOT/packages/apt-manual.txt"
+    if [[ -s "$pkgs" ]] && grep -qv '^#' "$pkgs"; then
+        echo "Installing from packages/apt-manual.txt..."
+        grep -v '^#' "$pkgs" | xargs sudo apt-get install -y
+    else
+        echo "apt-manual.txt not populated yet — installing defaults only."
+        sudo apt-get install -y xclip htop build-essential
+    fi
+    git lfs install
+}
+
+install_packages_arch() {
+    echo "Installing packages (pacman)..."
+    # On Arch/CachyOS nearly the whole stack is in the official repos, so most of
+    # the curl-based installers in install_terminal_tools become no-ops here.
+    # base-devel is needed to build AUR packages.
+    sudo pacman -Syu --needed --noconfirm \
+        git git-lfs gnupg curl base-devel \
+        zsh tmux fzf ripgrep bat fd unzip \
+        eza starship zoxide atuin git-delta lazygit neovim \
+        ttf-jetbrains-mono-nerd wl-clipboard
+    local pkgs="$DOTFILES_ROOT/packages/pacman-explicit.txt"
+    if [[ -s "$pkgs" ]] && grep -qv '^#' "$pkgs"; then
+        echo "Installing from packages/pacman-explicit.txt (official repos)..."
+        grep -v '^#' "$pkgs" | xargs -r sudo pacman -S --needed --noconfirm 2>/dev/null \
+            || echo "  (some entries may be AUR-only — install those with: paru -S <name>)"
+    fi
+    local aur="$DOTFILES_ROOT/packages/pacman-aur.txt"
+    if [[ -s "$aur" ]] && grep -qv '^#' "$aur" && have paru; then
+        echo "Installing AUR packages from packages/pacman-aur.txt..."
+        grep -v '^#' "$aur" | xargs -r paru -S --needed --noconfirm 2>/dev/null \
+            || echo "  (some AUR packages failed — check manually)"
+    fi
+    git lfs install
+}
+
+# ---------------------------------------------------------------------------
 # Idempotent tool installers. Each is a no-op when the tool is already present,
 # and each tolerates a missing network/curl so install.sh never aborts on them.
 # ---------------------------------------------------------------------------

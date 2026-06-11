@@ -23,9 +23,12 @@ for c in kreadconfig6 kreadconfig5; do
   command -v "$c" >/dev/null 2>&1 && { KR="$c"; break; }
 done
 
-# Super (Meta) tapped alone opens KRunner (Spotlight) instead of the app launcher.
+# Super (Meta) tapped alone opens the Overview: open windows laid out visually with a
+# search box on top — like COSMIC's launcher / macOS Mission Control + Spotlight in one.
+# Pure text search (KRunner) stays on Alt+Space.
+"$KW" --file kwinrc --group Plugins --key overviewEnabled true
 "$KW" --file kwinrc --group ModifierOnlyShortcuts --key Meta \
-  "org.kde.krunner,/App,org.kde.krunner.App,toggleDisplay"
+  "org.kde.kglobalaccel,/component/kwin,org.kde.kglobalaccel.Component,invokeShortcut,Overview"
 
 # Use the copy-on-select Konsole profile by default (the profile file is symlinked).
 "$KW" --file konsolerc --group "Desktop Entry" --key DefaultProfile "Main.profile"
