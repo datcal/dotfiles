@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Load SSH keys into the agent
+Comment=Adds ~/.ssh keys at login; passphrase comes from KWallet via ksshaskpass (no typing)
+Exec=ssh-add -q
+Terminal=false
+X-KDE-autostart-phase=2
+X-GNOME-Autostart-enabled=true

@@ -38,6 +38,9 @@ DOTFILES_LINKS=(
     ".local/share/konsole/Main.profile::$HOME/.local/share/konsole/Main.profile"
     ".local/share/kxmlgui5/konsole/konsoleui.rc::$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
     ".local/share/kxmlgui5/konsole/konsolepart.rc::$HOME/.local/share/kxmlgui5/konsole/konsolepart.rc"
+    # SSH key auto-load via ksshaskpass + KWallet (the KDE Seahorse/keyring equivalent).
+    ".config/environment.d/10-ssh-askpass.conf::$HOME/.config/environment.d/10-ssh-askpass.conf"
+    ".config/autostart/ssh-add.desktop::$HOME/.config/autostart/ssh-add.desktop"
 )
 
 # Back up a pre-existing real file/dir, then symlink src -> target.

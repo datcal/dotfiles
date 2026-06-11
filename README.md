@@ -66,19 +66,24 @@ Everything is themed **Tokyo Night**.
 Neovim has modes: you start in **Normal** mode (navigate + commands), press `i` to
 type (**Insert**), and `Esc` to go back. The leader key is `Space`.
 
-Open a file: `Space e` for the file tree (Enter opens, `Space e` closes it), or
-`Space Space` to fuzzy-find by name. Search inside files with `Space /`.
+Open the **file explorer**: `Ctrl-n` jumps your cursor *into* the file tree
+(opening it if needed, but never closing it), while `Space e` toggles the tree
+open/closed. In the tree, `Enter` opens a file and `Ctrl-w l` (or just click the
+file) jumps back to your code. `Space Space` fuzzy-finds a file by name. Dotfiles
+(`.gitignore`, `.env`, …) are always shown in the tree here.
 
-In the file tree (neo-tree):
+In the file tree (the Snacks explorer):
 
 | Keys | Action |
 |------|--------|
-| `Enter` | open file / expand folder |
-| `H` | toggle hidden + dotfiles (shown by default here) |
-| `Y` | copy the full path to the clipboard |
+| `Enter` / `l` | open file / expand folder |
+| `h` | collapse the folder (`Z` collapses everything) |
+| `H` / `I` | toggle dotfiles / git-ignored files (both shown by default here) |
 | `a` / `r` / `d` | add file / rename / delete |
-| `y` / `x` / `p` | copy / cut / paste the file within the tree |
+| `c` / `m` | copy / move the file to a new path |
+| `y` / `p` | yank (copy) / paste the file within the tree |
 | `P` | preview the file |
+| `Space /` | search (grep) inside the tree's folder |
 
 Move around:
 
@@ -107,11 +112,41 @@ Edit — `y` copy, `d` cut, `p`/`P` paste after/before, `u` undo, `Ctrl-r` redo:
 | `Alt-j` / `Alt-k` | move the line (or selection) down / up |
 | `ci"` `da(` `yi{` | change-inside-quotes / delete-around-parens / yank-inside-braces |
 
+Search (the `/` mode) — search inside the file you're editing:
+
+| Keys | Action |
+|------|--------|
+| `/foo` then `Enter` | search forward for `foo` (highlights as you type) |
+| `?foo` then `Enter` | search backward |
+| `n` / `N` | jump to next / previous match |
+| `*` / `#` | search for the word under the cursor (forward / back) |
+| `Esc` | clear the search highlight |
+| `Space /` | search *across all files* in the project (live grep) |
+
+Quick terminal — a small terminal at the bottom of the window, for a one-off
+command without leaving Neovim or switching tmux windows:
+
+| Keys | Action |
+|------|--------|
+| `Ctrl-/` | open / close the horizontal terminal (works from inside it too) |
+| `Ctrl-\` `Ctrl-n` | leave terminal typing → Normal mode (then `Ctrl-/` to close) |
+| `Space f t` | a floating terminal instead |
+
+Bigger / smaller text — the font is the terminal's job, so this is **Ghostty**
+(not a Neovim setting), and it affects everything on screen: `Ctrl-+` grows the
+text, `Ctrl--` shrinks it, `Ctrl-0` resets to the default size.
+
 Save and quit — `:w` save, `:q` quit, `:wq` save+quit, `:q!` quit without saving.
 Switch between open files with `Shift-h` / `Shift-l`.
 
 If you ever see a `No parser for language "..."` error, run `:TSInstall <lang>`
 (e.g. `:TSInstall bash`) once to install that language's syntax highlighting.
+
+Languages — **Go** is set up out of the box (LSP `gopls`, autocomplete, jump to
+definition with `gd`, hover docs with `K`, and auto-format + organize imports on
+save). The first time you open a `.go` file, Neovim downloads the tools in the
+background — give it a moment, or watch progress with `:Mason`. Other languages
+work the same way; add one with `:LazyExtras` (then pick e.g. `lang.python`).
 
 Git (the leader is `Space`):
 
